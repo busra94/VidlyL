@@ -1,0 +1,42 @@
+﻿
+@model Vidly2.ViewModels.RandomMovieViewModel
+@*THE VIEW means presentation of the model in a particular format.*@ 
+
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ 
+    var className = Model.Customers.Count > 5 ? "popular" : null; // if condition is true -> class name is popular otherwise null.
+
+}
+<h2 class=" @className">Movies</h2>
+
+@if (Model.Customers.Count == 0)
+{
+    <text>No one has rented this movie before.</text> // text is not a html tag but Razor engine understand that syntax.
+}
+else { 
+<ul>
+    @* @foreach (var customer in Model.Customers) // even if foreach block has one line we must use curly braces. ASP.NET MVC force that. (compulsory: zorunlu)
+        { // we can write here either html and c# code. View engine in MVC called Razor view engine knows how to parse the syntax.
+            <li>@customer.Name</li> *@  
+    
+    @foreach (var movie in Model.Movies) // even if foreach block has one line we must use curly braces. ASP.NET MVC force that. (compulsory: zorunlu)
+    { // we can write here either html and c# code. View engine in MVC called Razor view engine knows how to parse the syntax.
+        <li>@movie.Name</li> 
+
+    }
+        </ul>
+}
+
+
+@*"@<h2>@ViewData["Movie"] <\h2>  *@
+@* with this use we must cast object to movie object because each of ViewData dictionary item type is object.
+    and we must remember ViewData's parameter(Movie), if we change it in controller it wont be change in view.
+    OTHERWISE WE'LL GET NULL REFERENCE EXCEPTION.*@
+
+@*@model Vidly.Models.Movie
+    
+    we use ViewModel, not Model so we must change this statement!!! *@
