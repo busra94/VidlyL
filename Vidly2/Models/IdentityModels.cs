@@ -17,7 +17,11 @@ namespace Vidly2.Models
             return userIdentity;
         }
     }
-
+    /*Identity DbContext is part of asp.net Identity framework
+     When add-migration executed entity framework looked at our DbContext
+     and it discovered DbSets in our DbContext whiich reference classes like user role and so on.
+     and migration class calls to create these tables for asp.net identity.*/
+     
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Customer> Customers { get; set; }  // Customer table in our database. 
@@ -32,3 +36,8 @@ namespace Vidly2.Models
         }
     }
 }
+
+/*add-migration 'xxx' : xxx identifies the kind of change we have made to our domain model.
+ ----> WHEN WE MAKE CHANGES WE SHOULD NOT UPDATE OUR MIGRATION IN ONE GO(TEK SEFERDE) WE SHOULD MAKE SMALL CHANGES
+ CREATE A MIGRATION AND RUN IT ON A DATABASE, IF WE MAKME THESE CHANGES IN ONE GO WE INCREASE THE RISK OF THINGS
+ GOING WRONG.  */
