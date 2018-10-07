@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations; // for required attribute
 using System.Linq;
 using System.Web;
 
@@ -7,7 +8,10 @@ namespace Vidly2.Models
 {
     public class Customer
     {
+        //Overriding default conventions is called DATA ANNOTATIONS (you can search for fluent API)
         public int Id { get; set; }
+        [Required] //with this attribute our column name will no longer be nullable.
+        [StringLength(255)]
         public string Name { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
         public MembershipType MembershipType { get; set; }

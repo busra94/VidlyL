@@ -69,15 +69,34 @@ namespace Vidly2.Controllers
         //  movies, Listing movies in the database. 
         // to make parameter optional we make it nullable -> we add ? symbol
         // string is reference type so it's nullable. 
-        public ActionResult Index(int? pageIndex, string sortBy)
-        {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
 
-            if (String.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
-            return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+        //public ActionResult Index(int? pageIndex, string sortBy)
+        //{
+        //    if (!pageIndex.HasValue)
+        //        pageIndex = 1;
+
+        //    if (String.IsNullOrWhiteSpace(sortBy))
+        //        sortBy = "Name";
+        //    return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+        //}
+
+        public IEnumerable<Movie> GetMovies()
+        {
+            var movies = new List<Movie>
+            {
+                new Movie{Name = "Shrek" },
+
+                new Movie{Name = "Wall-e" }
+            };
+            return movies;
         }
+        public ActionResult Index()
+        {
+            var movies = GetMovies();
+            return View(movies);
+        }
+
+
 
         [Route("movies/released/{year}/{month:regex(\\d{2}):range(1, 12)}")]  // in regex there is no string so we don't use @ sign instead of we use \\. 
         public ActionResult ByReleaseDate(int year, int month)

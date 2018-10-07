@@ -14,22 +14,25 @@
     }
     else
     {
-        <table class="table table-bordered table-hover">
-            <tr>  
-                <th>Customers</th>
-            </tr>
+    <table class="table table-bordered table-hover">
+        <thead>
             <tr>
-                <td>
-                    <ul>
-
-                        @foreach (var customer in Model)
-                        {            
-                            <li>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id} , null)</li> 
-                        }
-
-                    </ul>
-                </td>
+                <th>Customers</th>
+                <th>Discount Rate</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(customer.Name, "Details", "Customers", new {id = customer.Id}, null)</td>
+                    <td>@customer.MembershipType.DiscountRate%</td>   @* % is a plain text*@  
+                    @* Entity framework only loadsonly customer object not their related objects.
+                       We need to customers and membership types together, this is what we call eager loading *@
+                </tr>
+            }
+        
+            </tbody>
         </table>
 
 
