@@ -18,7 +18,7 @@
         <thead>
             <tr>
                 <th>Customers</th>
-                <th>Discount Rate</th>
+                <th>Discount Types</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@
             {
                 <tr>
                     <td>@Html.ActionLink(customer.Name, "Details", "Customers", new {id = customer.Id}, null)</td>
-                    <td>@customer.MembershipType.DiscountRate%</td>   @* % is a plain text*@  
+                    <td>@customer.MembershipType.Name</td>   @* % is a plain text*@  
                     @* Entity framework only loadsonly customer object not their related objects.
                        We need to customers and membership types together, this is what we call eager loading *@
                 </tr>
