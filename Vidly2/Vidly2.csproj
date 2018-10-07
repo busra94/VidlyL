@@ -214,6 +214,26 @@
     <Compile Include="Migrations\201810071148262_AddMembershipType.Designer.cs">
       <DependentUpon>201810071148262_AddMembershipType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810071249027_Change MembershipId name.cs" />
+    <Compile Include="Migrations\201810071249027_Change MembershipId name.Designer.cs">
+      <DependentUpon>201810071249027_Change MembershipId name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810071251510_test.cs" />
+    <Compile Include="Migrations\201810071251510_test.Designer.cs">
+      <DependentUpon>201810071251510_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810071253098_tst2.cs" />
+    <Compile Include="Migrations\201810071253098_tst2.Designer.cs">
+      <DependentUpon>201810071253098_tst2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810071255190_change id names.cs" />
+    <Compile Include="Migrations\201810071255190_change id names.Designer.cs">
+      <DependentUpon>201810071255190_change id names.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810071306403_PopulateMembershipTypes.cs" />
+    <Compile Include="Migrations\201810071306403_PopulateMembershipTypes.Designer.cs">
+      <DependentUpon>201810071306403_PopulateMembershipTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -313,6 +333,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810071148262_AddMembershipType.resx">
       <DependentUpon>201810071148262_AddMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810071249027_Change MembershipId name.resx">
+      <DependentUpon>201810071249027_Change MembershipId name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810071251510_test.resx">
+      <DependentUpon>201810071251510_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810071253098_tst2.resx">
+      <DependentUpon>201810071253098_tst2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810071255190_change id names.resx">
+      <DependentUpon>201810071255190_change id names.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810071306403_PopulateMembershipTypes.resx">
+      <DependentUpon>201810071306403_PopulateMembershipTypes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

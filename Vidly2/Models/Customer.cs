@@ -11,7 +11,7 @@ namespace Vidly2.Models
         public string Name { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
         public MembershipType MembershipType { get; set; }
-        public byte MembershipTypeId { get; set; }
+        public byte MembershipTypeId { get; set; } // this is a convention, entity framework treats as foreign key to that property. 
         
         
         /*public MembershipType MembershipType { get; set; } -->
