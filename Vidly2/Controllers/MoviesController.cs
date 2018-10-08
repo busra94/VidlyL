@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using Vidly2.Models;
 using Vidly2.ViewModels;
 
@@ -15,7 +16,22 @@ namespace Vidly2.Controllers
         // GET: Movies /Random when we go to movies/random this method will be called 
         /*We can set return type ViewResult but if an action have different execution paths and return different action resuts(types), in that case we set to return type ActionResult so we can 
          * return any of ActionResult subtypes.  */
-        public ActionResult Random() // THIS METHOD AND VIEW NAME MUST BE SAME.
+        public ApplicationDbContext _context;
+
+        public MoviesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+        public ViewResult Index()
+        {
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
+            return View(movies);
+        }
+        public ActionResult Random() // THIS METHOD(ACTION) AND VIEW NAME MUST BE SAME.
         {
             var movies = new List<Movie>
             {
@@ -80,21 +96,14 @@ namespace Vidly2.Controllers
         //    return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
         //}
 
-        public IEnumerable<Movie> GetMovies()
+        public ViewResult MovieDetails(int id)
         {
-            var movies = new List<Movie>
-            {
-                new Movie{Name = "Shrek" },
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
+            return View(movie);
+            
+        }
 
-                new Movie{Name = "Wall-e" }
-            };
-            return movies;
-        }
-        public ActionResult Index()
-        {
-            var movies = GetMovies();
-            return View(movies);
-        }
+
 
 
 
