@@ -250,6 +250,10 @@
     <Compile Include="Migrations\201810072035338_MembershipTypeNameNotNullable.Designer.cs">
       <DependentUpon>201810072035338_MembershipTypeNameNotNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810080708143_PopulateCustomers.cs" />
+    <Compile Include="Migrations\201810080708143_PopulateCustomers.Designer.cs">
+      <DependentUpon>201810080708143_PopulateCustomers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -378,6 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810072035338_MembershipTypeNameNotNullable.resx">
       <DependentUpon>201810072035338_MembershipTypeNameNotNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810080708143_PopulateCustomers.resx">
+      <DependentUpon>201810080708143_PopulateCustomers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
