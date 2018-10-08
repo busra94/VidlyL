@@ -50,11 +50,11 @@ namespace Vidly2.Controllers
 
         //[Route("customers/details/{id}")]
 
-        public ActionResult Details(int id)  // !!! int? 
+        public ActionResult Details(int id)  
         {
             /* SingleOrDefault() returns record if there is some record otherwise throws exception
              * FirstOrDefault()  returns record if there is some record otherwise returns null. */
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(c => c.Id == id);//Take membership types and in with these id's compare customers table membershipId when find them equal return just that MembershipType.
 
             if (customer == null)
             {

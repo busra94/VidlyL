@@ -254,6 +254,14 @@
     <Compile Include="Migrations\201810080708143_PopulateCustomers.Designer.cs">
       <DependentUpon>201810080708143_PopulateCustomers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810080735322_AddBirthdateToCustomers.cs" />
+    <Compile Include="Migrations\201810080735322_AddBirthdateToCustomers.Designer.cs">
+      <DependentUpon>201810080735322_AddBirthdateToCustomers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810080750325_MakeDateTimeNullable.cs" />
+    <Compile Include="Migrations\201810080750325_MakeDateTimeNullable.Designer.cs">
+      <DependentUpon>201810080750325_MakeDateTimeNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -385,6 +393,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810080708143_PopulateCustomers.resx">
       <DependentUpon>201810080708143_PopulateCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810080735322_AddBirthdateToCustomers.resx">
+      <DependentUpon>201810080735322_AddBirthdateToCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810080750325_MakeDateTimeNullable.resx">
+      <DependentUpon>201810080750325_MakeDateTimeNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

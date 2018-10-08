@@ -13,6 +13,8 @@ namespace Vidly2.Models
         [Required] //with this attribute our column name will no longer be nullable.
         [StringLength(255)]
         public string Name { get; set; }
+
+        public DateTime? BirthDate { get; set; }  // DateTime? is a nullable DateTime
         public bool IsSubscribedToNewsletter { get; set; }
         public MembershipType MembershipType { get; set; }
         public byte MembershipTypeId { get; set; } // this is a convention, entity framework treats as foreign key to that property. 

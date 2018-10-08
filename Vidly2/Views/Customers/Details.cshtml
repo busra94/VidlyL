@@ -1,4 +1,5 @@
 ﻿@model Vidly2.Models.Customer
+
 @* Because i'm returning one record i'll use just customer model not a list *@
 
 @{
@@ -6,9 +7,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*Our model is customer so model name is we want !!!*@ 
+@*Our model is customer so model name is we want !!!*@
 <h2>@Model.Name</h2>
 
+<ul>
+    <li>Membership Type: @Model.MembershipType.Name</li>
+    @if (Model.BirthDate.HasValue)
+    {
+        <li>Birth Date: @Model.BirthDate</li>
+    }
+
+
+</ul>
 
 
 
