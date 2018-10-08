@@ -13,7 +13,7 @@ namespace Vidly2.Models
         [Required] //with this attribute our column name will no longer be nullable.
         [StringLength(255)]
         public string Name { get; set; }
-
+        [Display(Name = "Date of Birth")]  // displaying label Date of Birth
         public DateTime? BirthDate { get; set; }  // DateTime? is a nullable DateTime
         public bool IsSubscribedToNewsletter { get; set; }
         public MembershipType MembershipType { get; set; }
