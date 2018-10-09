@@ -25,7 +25,7 @@
             @foreach (var customer in Model)
             {
                 <tr>
-                    <td>@Html.ActionLink(customer.Name, "Details", "Customers", new {id = customer.Id}, null)</td>
+                    <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new {id = customer.Id}, null)</td>
                     <td>@customer.MembershipType.Name</td>   @* % is a plain text*@  
                     @* Entity framework only loadsonly customer object not their related objects.
                        We need to customers and membership types together, this is what we call eager loading *@

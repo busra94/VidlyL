@@ -28,11 +28,11 @@ namespace Vidly2.Controllers
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
-            var viewModel = new NewCustomerViewModel
+            var viewModel = new CustomerFormViewModel
             {
                 MembershipTypes = membershipTypes
             };
-            return View(viewModel);  // future we implement editing a customer, so we need to pass a customer object to this view in that time because of this we create view model 
+            return View("CustomerForm",viewModel);  // future we implement editing a customer, so we need to pass a customer object to this view in that time because of this we create view model 
         }
 
         [HttpPost] // with this attribute, we make sure this action only be called using HttpPost and not HttpGet.   
@@ -86,7 +86,21 @@ namespace Vidly2.Controllers
                 return HttpNotFound(); // 404 error
             }
             return View(customer);
+        }
 
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if(customer == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new CustomerFormViewModel // The model behind this view is NewCustomer 
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+            return View("CustomerForm" , viewModel); // if we use View() MVC framework look for Edit view
         }
 
     }
