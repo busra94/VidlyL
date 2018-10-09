@@ -6,7 +6,7 @@
 
 <h2>New Customer</h2>
 
-@using (Html.BeginForm("Create", "Customer"))  // Create => target action, Customer => controller
+@using (Html.BeginForm("Create", "Customers"))  // Create => target action, Customer => controller
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Name) @*m represents model*@

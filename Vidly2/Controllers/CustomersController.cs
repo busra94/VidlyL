@@ -42,8 +42,12 @@ namespace Vidly2.Controllers
             /* Because the model behind our view is of type NewCustomerViewModel we pass this parameter to Create action MVC framework will automatically map 
             request data to this object THIS IS CALLED MODEL BINDING. IF WE CHANGE OUR PARAMETER NewCustomerViewModel to Customer, MVC framework will understand that because in view all parameters prefixed with 'Customer'. */
             /*MVC framework binds this data to the request data. When reqest goes to our application MVC framework will use (form) properties to initialize to parameter ot our action. */
+            //TO ADD CUSTOMER TO DATABASE first we add it to DbContext(database gateway) Customers => table. DbContext ha a change tracking mechanism when we make changes in datas it will mark them deleted added or modified.
+            _context.Customers.Add(customer);
+            _context.SaveChanges(); /* we make to persist changes. 
+            DbContext goes through all modified objects and based on the kind of modification it will generate SQL statement at runtime and it will run them on the database all these statements wrapped in a transaction so either all changes get persisted together or nothing will get persisted. */
 
-            return View();
+            return RedirectToAction("Index","Customers"); // redirect to index action in customers controller
         }
 
         // GET: Customers
