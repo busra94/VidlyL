@@ -6,7 +6,7 @@
 
 <h2>Customer Form</h2>
 
-@using (Html.BeginForm("Create", "Customers"))  // Create => target action, Customer => controller
+@using (Html.BeginForm("Save", "Customers"))  // Create => target action, Customer => controller
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Name) @*m represents model*@
@@ -36,6 +36,8 @@
     <div class="checkbox">
         @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribed To Newsletter?
     </div>
+
+    @Html.HiddenFor(m => m.Customer.Id) @*we access customer in Save action by id, so we add a hiddenfor to use customer.Id *@
 
     <button type="submit" class="btn btn-primary">Save</button> @*in button class btn is required by all buttons and btn-primary which gives it the color used to represent the primary action on this view.     *@
 
