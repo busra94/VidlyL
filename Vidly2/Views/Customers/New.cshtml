@@ -1,4 +1,4 @@
-﻿@model Vidly2.Models.Customer
+﻿@model Vidly2.ViewModels.NewCustomerViewModel
 @{
     ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,19 +9,32 @@
 @using (Html.BeginForm("Create", "Customer"))  // Create => target action, Customer => controller
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Name) @*m represents model*@
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Customer.Name) @*m represents model*@
+        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.BirthDate) @*m represents model*@
+        @Html.LabelFor(m => m.Customer.BirthDate) @*m represents model*@
         @*<label for="BirthDate">Date of Birth</label>*@
-        @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Customer.BirthDate, new { @class = "form-control" })
     </div>
 
     // go https://getbootstrap.com/docs/3.3/css/#forms
     <div class="checkbox">
-        @Html.CheckBoxFor(m => m.IsSubscribedToNewsletter) Subscribed To Newsletter?
+        @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribed To Newsletter?
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.MembershipTypeId) @*m represents model*@
+        @*<label for="BirthDate">Date of Birth</label>*@
+        @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select membership type", new { @class = "form-control" })
+        @* with SelectList() we supply the list of items for the dropdown list.
+        SelectList() is one of the type in asp.net mvc we to initialize a dropdown list,
+        First argument is the constructor of this class is the list of items,
+        Second argument we need to specify the name of the property in membership type class that holds the value for each item,
+        Third argument is the property that holds the text for each item
+        "Select membership type." is an string for dropdown list
+        *@
     </div>
 
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly2.Models;
+using Vidly2.ViewModels;
 
 namespace Vidly2.Controllers
 {
@@ -24,9 +25,18 @@ namespace Vidly2.Controllers
             _context.Dispose();
 
         }
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new NewCustomerViewModel
+            {
+                MembershipTypes = membershipTypes
+            };
+            return View(viewModel);  // future we implement editing a customer, so we need to pass a customer object to this view in that time because of this we create view model 
+        }
 
         // GET: Customers
-         public ViewResult Index()
+        public ViewResult Index()
          {
              /* when executed in below statement entity framework will not query the database. this is called DEFERRED EXECTION.
               Queries executed when we iterate over this customers(var customers) object. We can immediately execute this query by calling the ToList() method */
@@ -63,10 +73,7 @@ namespace Vidly2.Controllers
             return View(customer);
             
         }
-        public ActionResult New()
-        {
-            return View();
-        }
+      
     }
 }
 

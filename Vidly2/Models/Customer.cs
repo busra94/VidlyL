@@ -10,13 +10,19 @@ namespace Vidly2.Models
     {
         //Overriding default conventions is called DATA ANNOTATIONS (you can search for fluent API)
         public int Id { get; set; }
+
         [Required] //with this attribute our column name will no longer be nullable.
         [StringLength(255)]
         public string Name { get; set; }
-        [Display(Name = "Date of Birth")]  // displaying label Date of Birth
+
+        [Display(Name = "Date of Birth")]  // displaying in label Date of Birth
         public DateTime? BirthDate { get; set; }  // DateTime? is a nullable DateTime
+
         public bool IsSubscribedToNewsletter { get; set; }
-        public MembershipType MembershipType { get; set; }
+
+        public MembershipType MembershipType { get; set;}
+
+        [Display(Name = "Membership Type")] // displaying in label Membership type.
         public byte MembershipTypeId { get; set; } // this is a convention, entity framework treats as foreign key to that property. 
         
         
