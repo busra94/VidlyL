@@ -16,10 +16,10 @@ namespace Vidly2.Controllers
 
         public CustomersController()
         {
-                _context = new ApplicationDbContext(); 
+            _context = new ApplicationDbContext();
         }
         //DbContext object is a disposable object, so we need to sispose it properly 
-        
+
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
@@ -35,13 +35,24 @@ namespace Vidly2.Controllers
             return View(viewModel);  // future we implement editing a customer, so we need to pass a customer object to this view in that time because of this we create view model 
         }
 
+        [HttpPost] // with this attribute, we make sure this action only be called using HttpPost and not HttpGet.   
+        // AS A BEST PRACTICE if your actions modify data they should never be accessible by a HttpGet
+        public ActionResult Create(Customer customer)
+        {
+            /* Because the model behind our view is of type NewCustomerViewModel we pass this parameter to Create action MVC framework will automatically map 
+            request data to this object THIS IS CALLED MODEL BINDING. IF WE CHANGE OUR PARAMETER NewCustomerViewModel to Customer, MVC framework will understand that because in view all parameters prefixed with 'Customer'. */
+            /*MVC framework binds this data to the request data. When reqest goes to our application MVC framework will use (form) properties to initialize to parameter ot our action. */
+
+            return View();
+        }
+
         // GET: Customers
         public ViewResult Index()
-         {
-             /* when executed in below statement entity framework will not query the database. this is called DEFERRED EXECTION.
-              Queries executed when we iterate over this customers(var customers) object. We can immediately execute this query by calling the ToList() method */
-             var customers = _context.Customers.Include(c => c.MembershipType).ToList(); // this Customers property is a DbSet defined in our DBContext, we can get all customers in the database.
-             return View(customers);
+        {
+            /* when executed in below statement entity framework will not query the database. this is called DEFERRED EXECTION.
+             Queries executed when we iterate over this customers(var customers) object. We can immediately execute this query by calling the ToList() method */
+            var customers = _context.Customers.Include(c => c.MembershipType).ToList(); // this Customers property is a DbSet defined in our DBContext, we can get all customers in the database.
+            return View(customers);
 
         }
         //public IEnumerable<Customer> GetCustomers()
@@ -60,7 +71,7 @@ namespace Vidly2.Controllers
 
         //[Route("customers/details/{id}")]
 
-        public ActionResult Details(int id)  
+        public ActionResult Details(int id)
         {
             /* SingleOrDefault() returns record if there is some record otherwise throws exception
              * FirstOrDefault()  returns record if there is some record otherwise returns null. */
@@ -71,9 +82,9 @@ namespace Vidly2.Controllers
                 return HttpNotFound(); // 404 error
             }
             return View(customer);
-            
+
         }
-      
+
     }
 }
 
