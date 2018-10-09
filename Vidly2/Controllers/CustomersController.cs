@@ -39,7 +39,7 @@ namespace Vidly2.Controllers
         // AS A BEST PRACTICE if your actions modify data they should never be accessible by a HttpGet
         public ActionResult Save(Customer customer)
         {
-            if (customer.Id == 0) // condition means is this is a new customler so we should add to the database. otherwise we should update it.
+            if (customer.Id == 0) // condition means is this is a new customer so we should add to the database. otherwise we should update it.
             {
                 /* Because the model behind our view is of type NewCustomerViewModel we pass this parameter to Create action MVC framework will automatically map 
                 request data to this object THIS IS CALLED MODEL BINDING. IF WE CHANGE OUR PARAMETER NewCustomerViewModel to Customer, MVC framework will understand that because in view all parameters prefixed with 'Customer'. */
@@ -50,7 +50,7 @@ namespace Vidly2.Controllers
             else
             {
                 //Mapper.Map(customer, customerInDb) => library AutoMap function. it looks at same properties and updates them, first looks at customer. 
-                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id); // we use Single method because when customer is not found it thows an exception  we don't wanna handle this exception, because this action should only be called as a result of posting our customer form.   
+                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id); // we use Single method because when customer is not found it throws an exception  we don't wanna handle this exception, because this action should only be called as a result of posting our customer form.   
                 customerInDb.Name = customer.Name;
                 customerInDb.BirthDate = customer.BirthDate;
                 customerInDb.MembershipTypeId = customer.MembershipTypeId;
@@ -107,7 +107,7 @@ namespace Vidly2.Controllers
             {
                 return HttpNotFound();
             }
-            var viewModel = new CustomerFormViewModel // The model behind this view is NewCustomer 
+            var viewModel = new CustomerFormViewModel // The model behind this view is CustomerFormViewModel 
             {
                 Customer = customer,
                 MembershipTypes = _context.MembershipTypes.ToList()
