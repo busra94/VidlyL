@@ -6,7 +6,7 @@
 
 <h2>Movie Form</h2>
 
-@using (Html.BeginForm("NewMovie", "Movies"))
+@using (Html.BeginForm("Save", "Movies"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.Name) @*m represents model*@
@@ -15,7 +15,7 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.ReleaseDate) @*m represents model*@
-        @Html.TextBoxFor(m => m.Movie.ReleaseDate, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Movie.ReleaseDate, "{0: d MMM yyy}", new { @class = "form-control" })
     </div>
 
     <div class="form-group">

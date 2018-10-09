@@ -78,12 +78,21 @@ namespace Vidly2.Controllers
 
         public ActionResult Edit(int id)
         {
-            //var movie = _context.Movies.Single(m => m.Id == id);
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
 
-            //var genres = _context.Genres.ToList();
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new MovieFormViewModel
+            {
+                Movie = movie,
+                Genres = _context.Genres.ToList()
+            };
 
 
-            return View();
+            return View("MovieForm",viewModel);
             ////Content does not take integer parameter.
             //return Content("id = " + id); // when we use + operator int to be converted to string.
         }
@@ -115,24 +124,26 @@ namespace Vidly2.Controllers
 
             return Content(year + "/" + month);
         }
-        public ViewResult NewMovie(int id)
+        public ViewResult New()
         {
             var viewModel = new MovieFormViewModel
             {
                 Genres = _context.Genres.ToList()
-        };
+            };
             return View("MovieForm", viewModel);
+
         }
 
         public ActionResult Save(Movie movie)
         {
-            var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
-            if (movieInDb.Id == 0) // add movie
+
+            if (movie.Id == 0) // add movie
             {
                 _context.Movies.Add(movie);
             }
             else // added database to form values ? 
             {
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
                 movieInDb.Name = movie.Name;
                 movieInDb.ReleaseDate = movie.ReleaseDate;
                 movieInDb.NumberInStock = movie.NumberInStock;
@@ -140,8 +151,8 @@ namespace Vidly2.Controllers
             }
             _context.SaveChanges();
 
-          
-            return View();
+
+            return RedirectToAction("Index", "Movies");
         }
 
 

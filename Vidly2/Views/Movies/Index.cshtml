@@ -6,7 +6,8 @@
 }
 
 <h2>Movies</h2>
-@Html.ActionLink("New Movie", "NewMovie", "Movies" , new {@class= "btn btn-primary" })  @*with class we ensure the link is diplayed like a button. We use Save Action here Because our action is Save not CustomerForm*@  
+
+@Html.ActionLink("New Movie", "New", "Movies", null, new {@class= "btn btn-primary" })  @*with class we ensure the link is diplayed like a button. We use Save Action here Because our action is Save not CustomerForm*@  
 
 <table class="table table-bordered table-hover">
     <thead>
@@ -20,7 +21,7 @@
         @foreach (var movie in Model)
         {
             <tr>
-                <td> @Html.ActionLink(movie.Name, "Index", "Movies", new { id = movie.Id }, null)</td>
+                <td> @Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, null)</td>
                 <td>@movie.Genre.Name</td>
 
             </tr>
