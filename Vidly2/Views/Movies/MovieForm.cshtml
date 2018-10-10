@@ -9,29 +9,29 @@
 
 @using (Html.BeginForm("Save", "Movies"))
 {
-    @Html.HiddenFor(m => m.Movie.Id) @* we write this to using method so we send  it to save action.*@
+    @Html.HiddenFor(m => m.Id) @* we write this to using method so we send  it to save action.*@
     <div class="form-group">
-        @Html.LabelFor(m => m.Movie.Name) @*m represents model*@
-        @Html.TextBoxFor(m => m.Movie.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Movie.Name)
+        @Html.LabelFor(m => m.Name) @*m represents model*@
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Movie.ReleaseDate) @*m represents model*@
-        @Html.TextBoxFor(m => m.Movie.ReleaseDate, "{0: d MMM yyy}", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Movie.ReleaseDate)
+        @Html.LabelFor(m => m.ReleaseDate) @*m represents model*@
+        @Html.TextBoxFor(m => m.ReleaseDate, "{0: d MMM yyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ReleaseDate)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Movie.GenreId) @*m represents model*@
-        @Html.DropDownListFor(m => m.Movie.GenreId, new SelectList(Model.Genres, "Id", "Name"), "Select genre of the movie", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Movie.GenreId)
+        @Html.LabelFor(m => m.GenreId) @*m represents model*@
+        @Html.DropDownListFor(m => m.GenreId, new SelectList(Model.Genres, "Id", "Name"), "Select genre of the movie", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.GenreId)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Movie.NumberInStock) @*m represents model*@
-        @Html.TextBoxFor(m => m.Movie.NumberInStock, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Movie.NumberInStock)
+        @Html.LabelFor(m => m.NumberInStock) @*m represents model*@
+        @Html.TextBoxFor(m => m.NumberInStock, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumberInStock)
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
