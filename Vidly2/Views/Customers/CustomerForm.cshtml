@@ -8,10 +8,28 @@
 
 @using (Html.BeginForm("Save", "Customers"))  // Create => target action, Customer => controller
 {
+    @Html.ValidationSummary(true, "Please fill required fields"); // true -> exclude validation summary
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Name) @*m represents model*@
         @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Customer.Name)
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.MembershipTypeId) @*m represents model*@
+        @*<label for="BirthDate">Date of Birth</label>*@
+        @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select membership type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
+        @* with SelectList() we supply the list of items for the dropdown list.
+            SelectList() is one of the type in asp.net mvc we to initialize a dropdown list,
+            First argument is the constructor of this class is the list of items,
+            Second argument we need to specify the name of the property in membership type class that holds the value for each item,
+            Third argument is the property that holds the text for each item
+            "Select membership type." is an string for dropdown list
+        *@
+
     </div>
 
     <div class="form-group">
@@ -21,31 +39,30 @@
         @Html.ValidationMessageFor(m => m.Customer.BirthDate)
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Customer.MembershipTypeId) @*m represents model*@
-        @*<label for="BirthDate">Date of Birth</label>*@
-        @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select membership type", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
-        @* with SelectList() we supply the list of items for the dropdown list.
-        SelectList() is one of the type in asp.net mvc we to initialize a dropdown list,
-        First argument is the constructor of this class is the list of items,
-        Second argument we need to specify the name of the property in membership type class that holds the value for each item,
-        Third argument is the property that holds the text for each item
-        "Select membership type." is an string for dropdown list
-        *@
-
-    </div>
     // go https://getbootstrap.com/docs/3.3/css/#forms
     <div class="checkbox">
         @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribed To Newsletter?
     </div>
 
     @Html.HiddenFor(m => m.Customer.Id) @*we access customer in Save action by id, so we add a hiddenfor to use customer.Id *@
-
+    @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button> @*in button class btn is required by all buttons and btn-primary which gives it the color used to represent the primary action on this view.     *@
 
 }
 
+@* @RenderSection("scripts", required: false)* this line is in_Layout page. This statement allows us to add
+    script section in our views and what we put there will be rendered here in the page. So on pages where we need
+    JQuery validation like the pages where we have form we can reference our JQuery validation bundle to enable
+    client-side validation.
+
+*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+@*On the client-side validation is only work with standard data annotations and does not custom validations.  *@
 
 
 

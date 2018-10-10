@@ -16,6 +16,10 @@ namespace Vidly2.Models
         public byte DiscountRate { get; set; } // we use byte again for discount rate because this going to be percentage between 0-100 
         [Required]
         public string Name { get; set; }
+
+        public static readonly byte Unknown = 0;
+        public static readonly byte PayAsYouGo = 1;
+
     
 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity; // Include method's library.
 using System.Linq;
+using System.ComponentModel.DataAnnotations; // for required attribute
 using System.Web;
 using System.Web.Mvc;
 using Vidly2.Models;
@@ -30,6 +31,7 @@ namespace Vidly2.Controllers
             var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new CustomerFormViewModel
             {
+                Customer = new Customer(), // initialize Customer so hidden fields for customer id has a default value which is zero, we get no validatio error about customer id field 
                 MembershipTypes = membershipTypes
             };
             return View("CustomerForm", viewModel);  // future we implement editing a customer, so we need to pass a customer object to this view in that time because of this we create view model 
@@ -37,6 +39,7 @@ namespace Vidly2.Controllers
 
         [HttpPost] // with this attribute, we make sure this action only be called using HttpPost and not HttpGet.   
         // AS A BEST PRACTICE if your actions modify data they should never be accessible by a HttpGet
+       [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
             /*MVC also uses data annotations to validate action parameters, example, in customer controller in Save action we have Customer object as a parameter. when asp.net MVC populates this costumer object

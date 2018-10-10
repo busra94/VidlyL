@@ -15,8 +15,9 @@ namespace Vidly2.Models
             */
             //ObjectInstance gives us access to the containing class. Because this is a customer we need to cast it to Customer
             var customer = (Customer) validationContext.ObjectInstance;
-            if (customer.MembershipTypeId == 0 || customer.MembershipTypeId == 1)  // pay as you go id is 1, later we change this code to make more maintainable. 0 is value of select membership type (mean is membership type does not selected.) 0 is the default value of numeric properties.
-                return ValidationResult.Success; // Success is a static field on the ValidationResult class. , we won't initalizethis field!
+            if (customer.MembershipTypeId == MembershipType.Unknown || customer.MembershipTypeId == MembershipType.PayAsYouGo)  // pay as you go id is 1, later we change this code to make more maintainable. 0 is value of select membership type (mean is membership type does not selected.) 0 is the default value of numeric properties.
+                // to make 0 and 1 values maintainable we create two read-only fields in MembershipType class.
+                return ValidationResult.Success; // Success is a static field on the ValidationResult class. , we won't initalize this field!
             if (customer.BirthDate == null)
                 return new ValidationResult("Birthdate is required"); // to indicate an error we instantiate a new validation result.
 
