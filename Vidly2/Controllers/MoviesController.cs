@@ -7,6 +7,7 @@ using System.Data.Entity;
 using Vidly2.Models;
 using Vidly2.ViewModels;
 
+// 8-9 ATLA 10 YAP 11 ATLA!!!!!!
 namespace Vidly2.Controllers
 {
     //THE CONTROLLER responds to the user input and performs interactions on the data model objects. The controller receives the input, optionally validates it and then passes the input to the model.

@@ -11,26 +11,29 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Name) @*m represents model*@
         @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Name)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.BirthDate) @*m represents model*@
         @*<label for="BirthDate">Date of Birth</label>*@
         @Html.TextBoxFor(m => m.Customer.BirthDate, "{0: d MMM yyy}", new { @class = "form-control" }) @*{0: d MMM yyy} , standard c# format string.*@
+        @Html.ValidationMessageFor(m => m.Customer.BirthDate)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.MembershipTypeId) @*m represents model*@
         @*<label for="BirthDate">Date of Birth</label>*@
         @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select membership type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
         @* with SelectList() we supply the list of items for the dropdown list.
-            SelectList() is one of the type in asp.net mvc we to initialize a dropdown list,
-            First argument is the constructor of this class is the list of items,
-            Second argument we need to specify the name of the property in membership type class that holds the value for each item,
-            Third argument is the property that holds the text for each item
-            "Select membership type." is an string for dropdown list
+        SelectList() is one of the type in asp.net mvc we to initialize a dropdown list,
+        First argument is the constructor of this class is the list of items,
+        Second argument we need to specify the name of the property in membership type class that holds the value for each item,
+        Third argument is the property that holds the text for each item
+        "Select membership type." is an string for dropdown list
         *@
-    
+
     </div>
     // go https://getbootstrap.com/docs/3.3/css/#forms
     <div class="checkbox">

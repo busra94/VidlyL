@@ -39,6 +39,20 @@ namespace Vidly2.Controllers
         // AS A BEST PRACTICE if your actions modify data they should never be accessible by a HttpGet
         public ActionResult Save(Customer customer)
         {
+            /*MVC also uses data annotations to validate action parameters, example, in customer controller in Save action we have Customer object as a parameter. when asp.net MVC populates this costumer object
+       * using requests data it checks to see if this object is valid based on the data annotations applied on various properties of this customer class.*/
+
+            if (!ModelState.IsValid) // accessing to validation data.
+            {
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+
+                };
+                return View("CustomerForm", viewModel);
+            }
+
             if (customer.Id == 0) // condition means is this is a new customer so we should add to the database. otherwise we should update it.
             {
                 /* Because the model behind our view is of type NewCustomerViewModel we pass this parameter to Create action MVC framework will automatically map 
@@ -61,6 +75,7 @@ namespace Vidly2.Controllers
             DbContext goes through all modified objects and based on the kind of modification it will generate SQL statement at runtime and it will run them on the database all these statements wrapped in a transaction so either all changes get persisted together or nothing will get persisted. */
             return RedirectToAction("Index", "Customers"); // redirect to index action in customers controller
         }
+
 
         // GET: Customers
         public ViewResult Index()
@@ -119,3 +134,9 @@ namespace Vidly2.Controllers
 }
 
 // when we add some records to tables directly, -because we wouldnt use migration, only migrations deployed- records won't be deployed to target database
+
+    /*ADD VALIDATION TO AN ACTION:
+     * 1. add data annotation to entities.
+     * 2. Use ModelState.IsValid to change the flow of the program, if is not valid return same view
+     * 3. Add validation messages to CustomerForm (to view), we put a placeholder for validation message
+     * next to each field that requires validation.*/
