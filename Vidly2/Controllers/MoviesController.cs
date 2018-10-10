@@ -31,6 +31,58 @@ namespace Vidly2.Controllers
             var movies = _context.Movies.Include(m => m.Genre).ToList();
             return View(movies);
         }
+
+        public ViewResult New()
+        {
+            var viewModel = new MovieFormViewModel
+            {
+                Genres = _context.Genres.ToList()
+            };
+            return View("MovieForm", viewModel);
+
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new MovieFormViewModel
+            {
+                Movie = movie,
+                Genres = _context.Genres.ToList()
+            };
+
+
+            return View("MovieForm", viewModel);
+            ////Content does not take integer parameter.
+            //return Content("id = " + id); // when we use + operator int to be converted to string.
+        }
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+
+            if (movie.Id == 0) // add movie
+            {
+                _context.Movies.Add(movie);
+            }
+            else // added database to form values ? 
+            {
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.NumberInStock = movie.NumberInStock;
+                movieInDb.GenreId = movie.GenreId;
+            }
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Index", "Movies");
+        }
         //public ActionResult Random() // THIS METHOD(ACTION) AND VIEW NAME MUST BE SAME.
         //{
         //    var movies = new List<Movie>
@@ -76,26 +128,6 @@ namespace Vidly2.Controllers
         //    //return new ViewResult();
         //}
 
-        public ActionResult Edit(int id)
-        {
-            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
-
-            if (movie == null)
-            {
-                return HttpNotFound();
-            }
-
-            var viewModel = new MovieFormViewModel
-            {
-                Movie = movie,
-                Genres = _context.Genres.ToList()
-            };
-
-
-            return View("MovieForm",viewModel);
-            ////Content does not take integer parameter.
-            //return Content("id = " + id); // when we use + operator int to be converted to string.
-        }
 
         //  movies, Listing movies in the database. 
         // to make parameter optional we make it nullable -> we add ? symbol
@@ -124,42 +156,11 @@ namespace Vidly2.Controllers
 
             return Content(year + "/" + month);
         }
-        public ViewResult New()
-        {
-            var viewModel = new MovieFormViewModel
-            {
-                Genres = _context.Genres.ToList()
-            };
-            return View("MovieForm", viewModel);
-
-        }
-
-        public ActionResult Save(Movie movie)
-        {
-
-            if (movie.Id == 0) // add movie
-            {
-                _context.Movies.Add(movie);
-            }
-            else // added database to form values ? 
-            {
-                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
-                movieInDb.Name = movie.Name;
-                movieInDb.ReleaseDate = movie.ReleaseDate;
-                movieInDb.NumberInStock = movie.NumberInStock;
-                movieInDb.GenreId = movie.GenreId;
-            }
-            _context.SaveChanges();
-
-
-            return RedirectToAction("Index", "Movies");
-        }
-
-
+     
     }
 }
 
-/*VIEW MODEL IS A MODEL AND VIEWMODEL IS SPECIFICALLY BUILT FOR A VIEW
- IT INCLUDES ANY  DATA AND RULES SPECIFIC TO THAT VIEW   */
+///*VIEW MODEL IS A MODEL AND VIEWMODEL IS SPECIFICALLY BUILT FOR A VIEW
+// IT INCLUDES ANY  DATA AND RULES SPECIFIC TO THAT VIEW   */
 
-/*  */
+///*  */

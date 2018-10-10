@@ -17,8 +17,10 @@ namespace Vidly2.Models
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
-        [Required]
+        //[Required]  //we removed this annotation because we don't add genre to movie table, with this annotation we have to add this to table.
         public Genre Genre { get; set; }
+       
+        [Required]
         [Display(Name = "Genre")]
         public byte GenreId { get; set; }
         [Display(Name = "Release Date") ]
