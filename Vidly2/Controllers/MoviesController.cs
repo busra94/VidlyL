@@ -37,6 +37,7 @@ namespace Vidly2.Controllers
         {
             var viewModel = new MovieFormViewModel
             {
+                Movie = new Movie(),
                 Genres = _context.Genres.ToList()
             };
             return View("MovieForm", viewModel);
@@ -64,6 +65,7 @@ namespace Vidly2.Controllers
             //return Content("id = " + id); // when we use + operator int to be converted to string.
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
             if (!ModelState.IsValid)
