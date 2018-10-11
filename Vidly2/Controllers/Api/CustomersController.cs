@@ -20,7 +20,7 @@ namespace Vidly2.Controllers.Api
             customersDto = new List<CustomerDto>();
         }
         //GET /api/customers this action by convention will respond to this url
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
             var customersInDb = _context.Customers.ToList();
             var customer = new CustomerDto();
@@ -34,10 +34,10 @@ namespace Vidly2.Controllers.Api
 
                 customersDto.Add(customer);
             }
-            return customersDto;
+            return Ok(customersDto);
         }
         //Get /api/customers/1(id) get one record from database
-        public CustomerDto GetCustomer(int id)
+        public IHttpActionResult GetCustomer(int id)
         {
             var customer = new CustomerDto();
             var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
@@ -50,16 +50,17 @@ namespace Vidly2.Controllers.Api
 
             if (customer == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                NotFound();
             }
-            return customer;
+            return Ok(customer);
         }
         //POST /api/customers we post(add) a customer to customers collection 
         [HttpPost] // with applying this attribute here this action only be called if we send an http post request. By convention if we set name to this action PostCustomer no need add [HttpPost] attribute
-        public CustomerDto CreateCustomer(CustomerDto customerDto) //action parameter will be in request body and asp.net mvc will automatically initializes this. 
+        public IHttpActionResult CreateCustomer(CustomerDto customerDto) //action parameter will be in request body and asp.net mvc will automatically initializes this. 
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest(); // this is a class that implements IHttpActionResult.
+               
 
             var customer = new Customer();
             customer.Name = customerDto.Name;
@@ -73,7 +74,7 @@ namespace Vidly2.Controllers.Api
             // add ID to DTO for return it to client
             customerDto.Id = customer.Id;
 
-            return customerDto;
+            return Created(new Uri(Request.RequestUri + "/" + customer.Id), customerDto); // uri -> unified resource identifier something like this /api/customers/10 (newly created id) 
         }
 
         //PUT /api/customers/1

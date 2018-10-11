@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Vidly2.Dtos;
 
 namespace Vidly2.Models
 {
@@ -15,6 +16,32 @@ namespace Vidly2.Models
             */
             //ObjectInstance gives us access to the containing class. Because this is a customer we need to cast it to Customer
             var customer = (Customer) validationContext.ObjectInstance;
+
+
+
+            //Customer customer = new Customer(); DERS 70 SON SORUDA 
+            //if (validationContext.ObjectType == typeof(Customer))
+            //    customer = (Customer)validationContext.ObjectInstance;
+            //else
+            //    customer = Mapper.Map((CustomerDto)validationContext.ObjectInstance, customer);
+
+            //Customer customer = new Customer();
+            //CustomerDto customerDto = new CustomerDto();
+
+            //if (validationContext.ObjectType == typeof(Customer))
+            //    customer = (Customer)validationContext.ObjectInstance;
+            //else
+            //{
+            //    //customerDto.Name = customer.Name;
+            //    //customerDto.BirthDate = customer.BirthDate;
+            //    //customerDto.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            //    //customerDto.MembershipTypeId = customer.MembershipTypeId;
+                
+            ////customerDto =(Customer) validationContext.ObjectInstance;
+               
+            //}
+
+               
             if (customer.MembershipTypeId == MembershipType.Unknown || customer.MembershipTypeId == MembershipType.PayAsYouGo)  // pay as you go id is 1, later we change this code to make more maintainable. 0 is value of select membership type (mean is membership type does not selected.) 0 is the default value of numeric properties.
                 // to make 0 and 1 values maintainable we create two read-only fields in MembershipType class.
                 return ValidationResult.Success; // Success is a static field on the ValidationResult class. , we won't initalize this field!
