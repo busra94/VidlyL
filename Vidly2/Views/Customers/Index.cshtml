@@ -7,38 +7,71 @@
 <h2>Customers</h2>
 
 
-<ul>
-    @if (!Model.Any()) // Any functions returns true if there is some record.
-    {   
-        <text>There is no customer yet!</text>
 
-    }
-    else
-    {
-    <table class="table table-bordered table-hover">
+@if (!Model.Any()) // Any functions returns true if there is some record.
+{
+    <text>There is no customer yet!</text>
+
+}
+else
+{
+    <table id="customers" class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th>Customers</th>
-                <th>Discount Types</th>
+                <th>Membership Types</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var customer in Model)
             {
                 <tr>
-                    <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new {id = customer.Id}, null)</td>
-                    <td>@customer.MembershipType.Name</td>   @* % is a plain text*@  
+                    <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)</td>
+                    <td>@customer.MembershipType.Name</td>   @* % is a plain text*@
                     @* Entity framework only loadsonly customer object not their related objects.
-                       We need to customers and membership types together, this is what we call eager loading *@
+                        We need to customers and membership types together, this is what we call eager loading *@
+                    <td>
+                        <button data-customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
+                    </td>
                 </tr>
             }
-        
-            </tbody>
-        </table>
+
+        </tbody>
+    </table>
 
 
-    }
-    
+}
 
-</ul>
+
+@section scripts
+{
+    @* because function is a callback function, the scope of $(this) can change in different callback functions *@
+    <script>
+        $(document).ready(function () {
+            // get the customers id and find all elements that have js-delete class and give it them click event
+            $("#customers  .js-delete").on("click", function () {
+                var button = $(this);
+                if (confirm("Are you sure you want to delete this customer?")) {
+                    $.ajax({
+                        url: "/api/customers/" + button.attr("data-customer-id"),
+                        method: "DELETE",
+                        success: function () {
+                            //delete table record
+                            button.parents("tr").remove();
+
+                        }
+
+                    });
+                }
+            });
+
+
+        });
+    </script>
+}
+
+
+
+
 
