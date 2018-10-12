@@ -60,14 +60,14 @@ namespace Vidly2.Controllers.Api
         {
             if (!ModelState.IsValid)
                 return BadRequest(); // this is a class that implements IHttpActionResult.
-               
 
-            var customer = new Customer();
-            customer.Name = customerDto.Name;
-            customer.BirthDate = customerDto.BirthDate;
-            customer.IsSubscribedToNewsletter = customerDto.IsSubscribedToNewsletter;
-            customer.MembershipTypeId = customerDto.MembershipTypeId;
 
+            //var customer = new Customer();
+            //customer.Name = customerDto.Name;
+            //customer.BirthDate = customerDto.BirthDate;
+            //customer.IsSubscribedToNewsletter = customerDto.IsSubscribedToNewsletter;
+            //customer.MembershipTypeId = customerDto.MembershipTypeId;
+           
             _context.Customers.Add(customer);
             _context.SaveChanges(); // id property will be set based on the ID generated from the database
 
