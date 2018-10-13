@@ -8,40 +8,21 @@
 
 
 
-@if (!Model.Any()) // Any functions returns true if there is some record.
-{
-    <text>There is no customer yet!</text>
+ @*// Any functions returns true if there is some record.*@
 
-}
-else
-{
-    <table id="customers" class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Customers</th>
-                <th>Membership Types</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model)
-            {
-                <tr>
-                    <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)</td>
-                    <td>@customer.MembershipType.Name</td>   @* % is a plain text*@
-                    @* Entity framework only loadsonly customer object not their related objects.
-                        We need to customers and membership types together, this is what we call eager loading *@
-                    <td>
-                        <button data-customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
-                    </td>
-                </tr>
-            }
+<table id="customers" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Customers</th>
+            <th>Membership Types</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* because we are rendering customers table using API so do not need to render the customers on the server,so delete foreach block  *@
+    </tbody>
+</table>
 
-        </tbody>
-    </table>
-
-
-}
 
 
 @section scripts
@@ -49,23 +30,70 @@ else
     @* because function is a callback function, the scope of $(this) can change in different callback functions *@
     <script>
         $(document).ready(function () {
-            // get the customers id and find all elements that have js-delete class and give it them click event
-            $("#customers  .js-delete").on("click", function () {
-                var button = $(this);
-                if (confirm("Are you sure you want to delete this customer?")) {
-                    $.ajax({
-                        url: "/api/customers/" + button.attr("data-customer-id"),
-                        method: "DELETE",
-                        success: function () {
-                            //delete table record
-                            button.parents("tr").remove();
+
+            $("#customers").DataTable({
+                ajax: {
+                    url: "/api/customers",
+                    dataSrc: ""  // the response we get from api is an array of objects, this array itself is the actual source of data, that's why we assign empty string as data source.
+                },
+                columns: [
+                    {
+                        data: "name", // customer's name data table will look at that property of the customer object and use thaat to render each row.
+                        render: function (data, type, customer) { // data is property above (equal name)
+                            return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>";
+                        }
+                    },
+
+                    {
+                        data: "membershipType.name",
+                    },
+
+                    {
+                        data: "id", //we use this in rendering a data attribute for a button. id of the customer
+                        render: function (data) {
+                            return "<button class 'btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
 
                         }
+                    }
 
-                    });
-                }
+                ]
+
             });
 
+            //*$("#customers  .js-delete").on("click", function () -->> get the customers id and find all elements in that element's childs that have js-delete class and give it them click event
+            /*$("#customers  .js-delete").on("click", function () in this line, if we have 20 customers on this page for each customer
+             * that have js-delete class(delete button) and each delete button we are going to have a separate handler function in the memory
+             * so more customers we have more memory we are going to comsume. to make efficient we add js-delete class as a filter to on() method
+             *
+             *$("#customers ").on("click",".js-delete", function () in this line no matter how many customers in the page we have only
+             * one click handler forall delete buttons, BECAUSE in this lilne our handler is hooked to only #customers selector an we have
+             * only one element on this page that matches the selector, the table with id customers
+             *
+             * So if click event is raised from an element that matches "js-delete" selector(filter) 'function (result)' callback function will be called
+             * */
+            $("#customers ").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this customer?", function (result) // this bootbox.js 's confirm returns a callback function
+                {
+                    // if (confirm("Are you sure you want to delete this customer?")) {} // this native confirm message in javascript returns bool value.
+
+                    if (result) // if condition is true means it's not null or undefined
+                    {
+                        $.ajax({
+                            url: "/api/customers/" + button.attr("data-customer-id"),
+                            method: "DELETE",
+                            success: function () {
+                                //delete table record
+                                button.parents("tr").remove();
+
+                            }
+
+                        });
+                    }
+                });
+
+            });
 
         });
     </script>

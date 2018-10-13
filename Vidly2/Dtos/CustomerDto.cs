@@ -18,6 +18,8 @@ namespace Vidly2.Dtos
       //  [Min18YearsIfAMember]    
        public DateTime? BirthDate { get; set; }  
 
+        public MembershipTypeDto MembershipType { get; set; }
+
         public bool IsSubscribedToNewsletter { get; set; }
 
         /*we remove MembershipType property because this property is creating dependency from our DTO to 

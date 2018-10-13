@@ -14,11 +14,8 @@ namespace Vidly2.App_Start
         {
             //Domain to Dto
             Mapper.CreateMap<Customer, CustomerDto>();
-            Mapper.CreateMap<CustomerDto, Customer>();
-
             Mapper.CreateMap<Movie, MovieDto>();
-            Mapper.CreateMap<MovieDto, Movie>();
-
+            Mapper.CreateMap<MembershipType, MembershipTypeDto>();
 
             // Dto to Domain
             Mapper.CreateMap<CustomerDto, Customer>()
@@ -26,6 +23,8 @@ namespace Vidly2.App_Start
 
             Mapper.CreateMap<MovieDto, Movie>()
                 .ForMember(c => c.Id, opt => opt.Ignore());
+
+            //Mapper.CreateMap<MembershipTypeDto, MembershipType>();
 
             /*
              * The exception is thrown when AutoMapper attempts to set the Id of movie:

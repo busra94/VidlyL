@@ -19,7 +19,7 @@ namespace Vidly2.Controllers
         {
             _context = new ApplicationDbContext();
         }
-        //DbContext object is a disposable object, so we need to sispose it properly 
+        //DbContext object is a disposable object, so we need to dispose it properly 
 
         protected override void Dispose(bool disposing)
         {
@@ -85,8 +85,7 @@ namespace Vidly2.Controllers
         {
             /* when executed in below statement entity framework will not query the database. this is called DEFERRED EXECTION.
              Queries executed when we iterate over this customers(var customers) object. We can immediately execute this query by calling the ToList() method */
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList(); // this Customers property is a DbSet defined in our DBContext, we can get all customers in the database.
-            return View(customers);
+            return View();
 
         }
         //public IEnumerable<Customer> GetCustomers()
