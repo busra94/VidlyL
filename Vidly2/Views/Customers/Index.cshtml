@@ -24,14 +24,13 @@
 </table>
 
 
-
-@section scripts
+  @section scripts
 {
     @* because function is a callback function, the scope of $(this) can change in different callback functions *@
     <script>
         $(document).ready(function () {
 
-            $("#customers").DataTable({
+            var dataTable = $("#customers").DataTable({
                 ajax: {
                     url: "/api/customers",
                     dataSrc: ""  // the response we get from api is an array of objects, this array itself is the actual source of data, that's why we assign empty string as data source.
@@ -51,7 +50,7 @@
                     {
                         data: "id", //we use this in rendering a data attribute for a button. id of the customer
                         render: function (data) {
-                            return "<button class 'btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                            return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
 
                         }
                     }
@@ -60,17 +59,7 @@
 
             });
 
-            //*$("#customers  .js-delete").on("click", function () -->> get the customers id and find all elements in that element's childs that have js-delete class and give it them click event
-            /*$("#customers  .js-delete").on("click", function () in this line, if we have 20 customers on this page for each customer
-             * that have js-delete class(delete button) and each delete button we are going to have a separate handler function in the memory
-             * so more customers we have more memory we are going to comsume. to make efficient we add js-delete class as a filter to on() method
-             *
-             *$("#customers ").on("click",".js-delete", function () in this line no matter how many customers in the page we have only
-             * one click handler forall delete buttons, BECAUSE in this lilne our handler is hooked to only #customers selector an we have
-             * only one element on this page that matches the selector, the table with id customers
-             *
-             * So if click event is raised from an element that matches "js-delete" selector(filter) 'function (result)' callback function will be called
-             * */
+            
             $("#customers ").on("click", ".js-delete", function () {
                 var button = $(this);
 
@@ -85,7 +74,7 @@
                             method: "DELETE",
                             success: function () {
                                 //delete table record
-                                button.parents("tr").remove();
+                                dataTable.row(button.parents("tr")).remove().draw();
 
                             }
 
@@ -96,8 +85,23 @@
             });
 
         });
-    </script>
-}
+
+        //*$("#customers  .js-delete").on("click", function () -->> get the customers id and find all elements in that element's childs that have js-delete class and give it them click event
+            /*$("#customers  .js-delete").on("click", function () in this line, if we have 20 customers on this page for each customer
+             * that have js-delete class(delete button) and each delete button we are going to have a separate handler function in the memory
+             * so more customers we have more memory we are going to comsume. to make efficient we add js-delete class as a filter to on() method
+             *
+             *$("#customers ").on("click",".js-delete", function () in this line no matter how many customers in the page we have only
+             * one click handler forall delete buttons, BECAUSE in this lilne our handler is hooked to only #customers selector an we have
+             * only one element on this page that matches the selector, the table with id customers
+             *
+             * So if click event is raised from an element that matches "js-delete" selector(filter) 'function (result)' callback function will be called
+             * */
+    </script> 
+      }
+
+
+
 
 
 
