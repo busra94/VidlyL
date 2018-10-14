@@ -22,10 +22,16 @@ namespace Vidly2.Controllers.Api
           
         }
         //GET /api/customers this action by convention will respond to this url
-        public IHttpActionResult GetCustomers()
+        public IHttpActionResult GetCustomers(string query = null)
         {
-            var customersInDb = _context.Customers
-                .Include(c => c.MembershipType).ToList()
+            var customersQuery = _context.Customers
+                .Include(c => c.MembershipType);
+
+            if (!String.IsNullOrWhiteSpace(query)) // if there is a query is returning from typeahead return that contains query 
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+
+            var customersInDb = customersQuery         
+                .ToList()
                 .Select(Mapper.Map<Customer,CustomerDto>);
       
             return Ok(customersInDb);

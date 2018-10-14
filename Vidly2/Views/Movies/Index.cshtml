@@ -7,28 +7,83 @@
 
 <h2>Movies</h2>
 
-@Html.ActionLink("New Movie", "New", "Movies", null, new {@class= "btn btn-primary" })  @*with class we ensure the link is diplayed like a button. We use Save Action here Because our action is Save not CustomerForm*@  
+@Html.ActionLink("New Movie", "New", "Movies", null, new { @class = "btn btn-primary" })  @*with class we ensure the link is diplayed like a button. We use Save Action here Because our action is Save not CustomerForm*@
 
-<table class="table table-bordered table-hover">
+<table id="movies" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Movie</th>
             <th>Genre</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
-
-        @foreach (var movie in Model)
-        {
-            <tr>
-                <td> @Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, null)</td>
-                <td>@movie.Genre.Name</td>
-
-            </tr>
-
-        }
-
+               
     </tbody>
-
+    
 </table>
 
+@section scripts
+{
+    @* because function is a callback function, the scope of $(this) can change in different callback functions *@
+    <script>
+        $(document).ready(function () {
+
+            var dataTable = $("#movies").DataTable({
+                ajax: {
+                    url: "/api/movies",
+                    dataSrc: ""  // the response we get from api is an array of objects, this array itself is the actual source of data, that's why we assign empty string as data source.
+                },
+                columns: [
+                    {
+                        data: "name", // movie's name data table will look at that property of the movie object and use thaat to render each row.
+                        render: function (data, type, movie) { // data is property above (equal name)
+                            return "<a href='/movies/edit/" + movie.id + "'>" + movie.name + "</a>";
+                        }
+                    },
+
+                    {
+                        data: "genre.name",  // use camel notation in variables!!! 
+                    },
+
+                    {
+                        data: "id", //we use this in rendering a data attribute for a button. id of the movie
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-movie-id=" + data + ">Delete</button>";
+
+                        }
+                    }
+
+                ]
+
+            });
+
+
+            $("#movies ").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this movie?", function (result) // this bootbox.js 's confirm returns a callback function
+                {
+                    // if (confirm("Are you sure you want to delete this customer?")) {} // this native confirm message in javascript returns bool value.
+
+                    if (result) // if condition is true means it's not null or undefined
+                    {
+                        $.ajax({
+                            url: "/api/movies/" + button.attr("data-movie-id"),
+                            method: "DELETE",
+                            success: function () {
+                                //delete table record
+                                dataTable.row(button.parents("tr")).remove().draw();
+
+                            }
+
+                        });
+                    }
+                });
+
+            });
+
+        });
+               
+    </script>
+}
