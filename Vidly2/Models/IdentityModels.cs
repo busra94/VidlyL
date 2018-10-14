@@ -28,6 +28,7 @@ namespace Vidly2.Models
         public DbSet<Movie> Movies { get; set; } // Movie table in our database.
         public DbSet<Genre> Genres { get; set; } // Genres table in our database
         public DbSet<MembershipType> MembershipTypes { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
