@@ -14,7 +14,8 @@ namespace Vidly2
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/datatables/jquery.datatables.js",
                         "~/Scripts/datatables/datatables.bootstrap.js", // integrates dantatables with bootstrap
-                        "~/Scripts/typeahead.bundle.js"
+                        "~/Scripts/typeahead.bundle.js",
+                        "~/Scripts/toastr.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -29,6 +30,7 @@ namespace Vidly2
                       "~/Content/bootstrap-lumen.css",
                       "~/Content/datatables/css/datatables.bootstrap.css", //this stylesheet makes datatables look like bootstrap tables
                       "~/Content/typeahead.css",
+                      "~/Content/toastr.css",
                       "~/Content/Site.css"));
         }
     }

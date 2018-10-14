@@ -9,7 +9,7 @@
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
-            <input id="customer" type="text" value="" class="form-control" />
+            <input id="customer" required type="text" value="" class="form-control" />
         </div>
     </div>
 
@@ -20,11 +20,11 @@
         </div>
     </div>
 
-        <div class="row">
-            <div class="col-md-4 col-sm-4">
-                <ul id="movies" class="list-group"></ul>
-            </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <ul id="movies" class="list-group"></ul>
         </div>
+    </div>
 
     <button class="btn btn-primary">Submit</button>
 </form>
@@ -35,11 +35,11 @@
         $(document).ready(function () {
             var vm = { //view model
                 movieIds: []
-            }; 
+            };
             var customers = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                
+
                 remote: {
                     url: '/api/customers?query=%QUERY',
                     wildcard: '%QUERY'
@@ -52,9 +52,9 @@
 
             },
                 {
-                name: 'customers',
-                display: 'name',
-                source: customers
+                    name: 'customers',
+                    display: 'name',
+                    source: customers
                 }).on("typeahead:select", function (e, customer) {
                     vm.customerId = customer.id;
 
@@ -87,6 +87,8 @@
 
                 });
 
+     
+
             $("#newRental").submit(function (e) {
                 e.preventDefault(); // prevent a form from submitting normally
 
@@ -96,17 +98,17 @@
                     data: vm  // movieIDs and customerId
                 })
                     .done(function () {
-                        console.log("submit succeed");
+                        toastr.success("Rentals successfully recorded.");
                     })
                     .fail(function () {
-
+                        toastr.fail("Something unexpected happened");
                     });
             });
 
         });
 
-       
-    </script>
-   
 
-    }
+    </script>
+
+
+}
